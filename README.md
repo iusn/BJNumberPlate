@@ -2,7 +2,7 @@
 --
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/iusn/BJNumberPlate/blob/master/LICENSE)&nbsp;
-[![CocoaPods](http://img.shields.io/cocoapods/p/YKLineChartView.svg?style=flat)](http://cocoapods.org/?q= YKLineChartView)&nbsp;
+[![CocoaPods](http://img.shields.io/cocoapods/p/BJNumberPlateOC.svg?style=flat)](http://cocoapods.org/?q= BJNumberPlateOC)&nbsp;
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AFNetworking.svg)](https://img.shields.io/cocoapods/v/BJNumberPlateOC.svg)
 [![Support](https://img.shields.io/badge/support-iOS7.0+-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 [![Support](https://img.shields.io/badge/support-Autolayout-orange.svg?style=flatt)](https://www.apple.com/)&nbsp;
