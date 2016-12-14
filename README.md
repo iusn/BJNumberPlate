@@ -8,6 +8,7 @@
 [![Support](https://img.shields.io/badge/support-Autolayout-orange.svg?style=flatt)](https://www.apple.com/)&nbsp;
 [![Build Status](https://travis-ci.org/yate1996/YYStock.svg?branch=master)](https://github.com/iusn/BJNumberPlate)
 
+[中文](https://github.com/iusn/BJNumberPlate/blob/master/CH.md)
 
 BJNumberPlate is a custom number plate keyboard, it's easy to use. Support Swift 3.0 and OC.
 
