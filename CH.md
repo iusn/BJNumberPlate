@@ -8,20 +8,19 @@
 [![Support](https://img.shields.io/badge/support-Autolayout-orange.svg?style=flatt)](https://www.apple.com/)&nbsp;
 [![Build Status](https://travis-ci.org/yate1996/YYStock.svg?branch=master)](https://github.com/iusn/BJNumberPlate)
 
+[英文](https://github.com/iusn/BJNumberPlate/blob/master/README.md)
 
-BJNumberPlate is a custom number plate keyboard, it's easy to use. Support Swift 3.0 and OC.
+BJNumberPlate 是用 Swift 3.0 和 OC 写的一个车牌号码键盘输入库
 
-[swift Project](https://github.com/iusn/BJNumberPlateSwift)
-
-[OC Project](https://github.com/iusn/BJNumberPlateOC)
+[swift版本](https://github.com/iusn/BJNumberPlateSwift)
+[OC版本](https://github.com/iusn/BJNumberPlateOC)
 
 ## Screenshot
 
 ![image](https://github.com/iusn/BJNumberPlate/blob/master/gif.gif)
 
-##how to use
-To integrate BJNumberPlate into your Xcode project using CocoaPods, specify it in your `Podfile`:
-
+##如何使用
+在`Podfile`中加入下代码
 
 ###Objective-C
 ```ruby
@@ -33,7 +32,7 @@ pod 'BJNumberPlateOC'
 
 end
 ```
-
+在项目是需要用到的地方
 
 ```objective-c
 BJNumberPlateOC *numberPlate = [[BJVehicleNumberPlate alloc] initWithFrame:CGRectZero];
@@ -53,17 +52,9 @@ pod 'BJNumberPlateSwift'
 
 end
 ```
-the code where to use
+在项目用需要使用的地方
 
 ```swift
 let keyboard = BJNumberPlate()
 textField.inputView = keyboard;
 ```
-
-
-
-
-
-
-##License
-BJNumberPlate is provided under the MIT license. See LICENSE file for details.
