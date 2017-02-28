@@ -8,11 +8,8 @@
 
 import UIKit
 
-
 class ViewController: UIViewController {
-
     var textField = UITextField()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let keyboard = BJNumberPlate()

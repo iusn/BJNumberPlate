@@ -16,10 +16,9 @@ enum BJKeyboardButtonStyle{
 }
 
 class BJKeyboardButton: UIButton {
-    
     var style:BJKeyboardButtonStyle?
     class func keyboardButtonWithStyle(buttonStyle:BJKeyboardButtonStyle) -> (BJKeyboardButton){
-          let button = BJKeyboardButton(type:UIButtonType.custom);
+          let button = BJKeyboardButton(type:UIButtonType.custom) 
           button.style = buttonStyle
           return button
     }
@@ -29,23 +28,21 @@ var currentFirstResponder:UIResponder?
 extension UIResponder{
     
     func BJFindFirstResponder(sender:Any){
-        currentFirstResponder = self;
+        currentFirstResponder = self 
     }
     
     class func BJCurrentFirstResponder() -> (UIResponder){
         currentFirstResponder = nil
         UIApplication.shared.sendAction(#selector(BJFindFirstResponder(sender:)), to: nil, from: nil, for: nil)
-        return currentFirstResponder!;
+        return currentFirstResponder! 
     }
 }
 
 public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
-    
     enum BJKeyboardStyle {
         case BJKeyboardStyleProvince
         case BJKeyboardStyleLetter
     }
-    
     private let pArray = ["京","沪","津","渝","冀","晋","辽",
                           "吉","黑","苏","浙","皖","闽","赣",
                           "鲁","豫","鄂","湘","粤","琼","川",
@@ -67,22 +64,24 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
     private var width:CGFloat?
     private var height:CGFloat?
     
-    private var provinceArr:NSArray?
-    private var letterArr:NSArray?
+    private var provinceArr:Array<BJKeyboardButton>
+    private var letterArr:Array<BJKeyboardButton>
     
     private var toolBarView:UIView?
     private var donebutton:UIButton?
-    private let toolBarViewHeight:CGFloat = 35.0;
-    private let  kKeyHorizontalSpace:CGFloat = 2.0;
-    private let  kKeyVerticalSpace:CGFloat = 5.0;
+    private let toolBarViewHeight:CGFloat = 35.0 
+    private let  kKeyHorizontalSpace:CGFloat = 2.0 
+    private let  kKeyVerticalSpace:CGFloat = 5.0 
     
     private var keyInput:UIKeyInput?
     
     
     public init(){
+        self.provinceArr = [BJKeyboardButton]()
+        self.letterArr = [BJKeyboardButton]()
         
         super.init(frame:CGRect.zero, inputViewStyle: UIInputViewStyle.keyboard)
-        buttonFont = UIFont.systemFont(ofSize: 18);
+        buttonFont = UIFont.systemFont(ofSize: 18) 
         changeBtn = BJKeyboardButton(type:UIButtonType.custom)
         changeBtn?.setTitle("ABC", for: .normal)
         changeBtn?.style = .BJKeyboardButtonStyleChange
@@ -95,24 +94,23 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
         deleteBtn = self.setButtonStyle(button: deleteBtn!)
         self.addSubview(deleteBtn!)
         
-        var tempArray = NSMutableArray();
-        
+        var tempArray = [BJKeyboardButton]() 
         for str in pArray {
             var btn = BJKeyboardButton.keyboardButtonWithStyle(buttonStyle:.BJKeyboardButtonStyleProvince)
             btn = self.setButtonStyle(button: btn)
             btn.setTitle(str, for: .normal)
             self.addSubview(btn)
-            tempArray.add(btn)
+            tempArray.append(btn)
         }
         
-        provinceArr = tempArray;
-        tempArray = NSMutableArray()
+        provinceArr = tempArray 
+        tempArray = [BJKeyboardButton]() 
         for str in lArray {
             var btn = BJKeyboardButton.keyboardButtonWithStyle(buttonStyle:.BJKeyboardButtonStyleLetter)
             btn = self.setButtonStyle(button: btn)
             btn.setTitle(str, for: .normal)
             self.addSubview(btn)
-            tempArray.add(btn)
+            tempArray.append(btn)
         }
         
         letterArr = tempArray
@@ -134,26 +132,21 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override public func layoutSubviews() {
-        super.layoutSubviews();
-        
-        let bounds = self.bounds;
-        self.width = bounds.size.width;
-        self.height = bounds.size.height;
-        
-        toolBarView?.frame = CGRect(x:0,y:0,width:self.width!,height:toolBarViewHeight);
-        donebutton?.frame = CGRect(x:width! - 40 - 10,y:(toolBarViewHeight - 20)/2,width:40,height:20);
-        
+        super.layoutSubviews()
+        let bounds = self.bounds
+        self.width = bounds.size.width 
+        self.height = bounds.size.height 
+        toolBarView?.frame = CGRect(x:0,y:0,width:self.width!,height:toolBarViewHeight) 
+        donebutton?.frame = CGRect(x:width! - 40 - 10,y:(toolBarViewHeight - 20)/2,width:40,height:20) 
         if isProvinceKeyBoard{
             self.creatKeyBoardWithType(buttonType: .BJKeyboardStyleProvince, hidenOrNot: false)
         }else{
-            self.creatKeyBoardWithType(buttonType: .BJKeyboardStyleLetter, hidenOrNot: false);
+            self.creatKeyBoardWithType(buttonType: .BJKeyboardStyleLetter, hidenOrNot: false) 
         }
     }
     
     override public func sizeThatFits(_ size: CGSize) -> CGSize {
-        
         var tempSize = CGSize()
         tempSize.width = UIScreen.main.bounds.width
         tempSize.height =  UIScreen.main.bounds.height <= 480 ?
@@ -164,30 +157,27 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
     }
     
   private  func creatKeyBoardWithType(buttonType type:BJKeyboardStyle , hidenOrNot hiden:Bool){
-        
-        var array = NSArray()
-        var buttonCount = 0;
+        var array = [BJKeyboardButton]() //Array<BJKeyboardButton>
+        var buttonCount = 0 
         var tempW = 0.00
         
         switch type {
         case .BJKeyboardStyleProvince:
-            array = provinceArr!
+            array = provinceArr
             buttonCount = 28
             tempW = 0.0
         case .BJKeyboardStyleLetter:
-            array = letterArr!
+            array = letterArr
             buttonCount = 29
             tempW = 0.5
         }
         
         height = height! - toolBarViewHeight
-        
         let KeyWidth = (width!/10.0 - kKeyHorizontalSpace*2.0)
-        let KeyHeight = (height!/4.0 - kKeyVerticalSpace*2.0);
-    
+        let KeyHeight = (height!/4.0 - kKeyVerticalSpace*2.0) 
         for index in 0...(array.count-1){
-            let btn = array[index] as? BJKeyboardButton
-            btn?.isHidden = hiden
+            let btn = array[index]
+            btn.isHidden = hiden
             var k = index
             var j = index/10
             if index >= 10 && index < buttonCount {
@@ -197,40 +187,36 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
                 j = 3
             }
             if index < 20{
-                btn?.frame = CGRect(x:kKeyHorizontalSpace + CGFloat(k)*(width!/10),
-                                   y:toolBarViewHeight+kKeyVerticalSpace + CGFloat(j)*(height! / 4),
-                                   width:KeyWidth,
-                                   height:KeyHeight)
+                btn.frame = CGRect(x:kKeyHorizontalSpace + CGFloat(k)*(width!/10),
+                                                   y:toolBarViewHeight+kKeyVerticalSpace + CGFloat(j)*(height! / 4),
+                                                   width:KeyWidth,
+                                                   height:KeyHeight)
             }else if index < buttonCount{
-                btn?.frame  = CGRect(x:kKeyHorizontalSpace + (CGFloat(k+1)-CGFloat(tempW)) * (width!/10.0),
-                                    y:toolBarViewHeight+kKeyVerticalSpace + CGFloat(j)*(height!/4),
-                                    width:KeyWidth,
-                                    height:KeyHeight)
+                btn.frame  = CGRect(x:kKeyHorizontalSpace + (CGFloat(k+1)-CGFloat(tempW)) * (width!/10.0),
+                                                    y:toolBarViewHeight+kKeyVerticalSpace + CGFloat(j)*(height!/4),
+                                                    width:KeyWidth,
+                                                    height:KeyHeight)
                 
             }else{
-                btn?.frame = CGRect(x:kKeyHorizontalSpace + (CGFloat(k+2)-CGFloat(tempW))*(width!/10),
-                                   y:toolBarViewHeight+kKeyVerticalSpace + CGFloat(j)*(height!/4),
-                                   width:KeyWidth,
-                                   height:KeyHeight)
+                btn.frame = CGRect(x:kKeyHorizontalSpace + (CGFloat(k+2)-CGFloat(tempW))*(width!/10),
+                                                   y:toolBarViewHeight+kKeyVerticalSpace + CGFloat(j)*(height!/4),
+                                                   width:KeyWidth,
+                                                   height:KeyHeight)
                 
             }
         }
         deleteBtn?.frame = CGRect(x:width! - KeyWidth*1.5 - kKeyHorizontalSpace,
-                                 y:height! - KeyHeight - kKeyVerticalSpace+toolBarViewHeight,
-                                 width:KeyWidth*1.5,
-                                 height:KeyHeight)
-        
+                                                     y:height! - KeyHeight - kKeyVerticalSpace+toolBarViewHeight,
+                                                     width:KeyWidth*1.5,
+                                                     height:KeyHeight)
+    
         changeBtn?.frame = CGRect(x:kKeyHorizontalSpace,
-                                 y:height! - KeyHeight - kKeyVerticalSpace+toolBarViewHeight,
-                                 width:KeyWidth * 1.5,
-                                 height:KeyHeight)
-        
+                                                         y:height! - KeyHeight - kKeyVerticalSpace+toolBarViewHeight,
+                                                         width:KeyWidth * 1.5,
+                                                         height:KeyHeight)
     }
     
-    
-    
    private func setButtonStyle(button:BJKeyboardButton) -> (BJKeyboardButton){
-    
         button.isExclusiveTouch = true
         button.backgroundColor = UIColor.clear
         button.setBackgroundImage(buttonImage, for: .normal)
@@ -238,21 +224,18 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
         button.titleLabel?.font = buttonFont
         button.addTarget(self,
                          action: #selector(buttonInput(button:)),
-                            for: .touchUpInside);
+                            for: .touchUpInside) 
         button.addTarget(self,
                          action: #selector(buttonPlayClick(button:)),
-                            for: .touchDown);
+                            for: .touchDown) 
         return button
     }
     
-
      func buttonInput(button:BJKeyboardButton){
-        
         keyInput = findKeyInput()
         if keyInput == nil{
             return
         }
-        
         if button.style == .BJKeyboardButtonStyleProvince ||
            button.style == .BJKeyboardButtonStyleLetter{
             keyInput?.insertText((button.titleLabel?.text)!)
@@ -272,7 +255,7 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
                     if btn.style == .BJKeyboardButtonStyleProvince{
                         self.creatKeyBoardWithType(buttonType: .BJKeyboardStyleProvince, hidenOrNot: true)
                     }else if btn.style == .BJKeyboardButtonStyleLetter{
-                        self.creatKeyBoardWithType(buttonType: .BJKeyboardStyleLetter, hidenOrNot: false);
+                        self.creatKeyBoardWithType(buttonType: .BJKeyboardStyleLetter, hidenOrNot: false) 
                     }
                 }
             }
@@ -306,13 +289,12 @@ public class BJNumberPlate: UIInputView,UIInputViewAudioFeedback {
         if UIResponder.BJCurrentFirstResponder().isFirstResponder{
            UIResponder.BJCurrentFirstResponder().resignFirstResponder()
         }else{
-          print("Not Find First responder");
+          print("BJNumberPlate>>>>Not Find First responder")
         }
     }
-
+    
     private func RGBColor(R r:CGFloat,G g:CGFloat,B b:CGFloat) ->(UIColor){
-        let color = UIColor(red:r/255.0,green:g/255.0,blue:b/255.0,alpha:1.0);
+        let color = UIColor(red:r/255.0,green:g/255.0,blue:b/255.0,alpha:1.0) 
         return color
     }
-    
 }
